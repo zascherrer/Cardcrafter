@@ -74,11 +74,16 @@ public class DropdownManager : MonoBehaviour
         }
     }
 
-    private void AddDropdown()
+    public void AddDropdown(int siblingIndex = -1)
     {
         GameObject newDropdown = Instantiate(dropdownTemplate);
 
         newDropdown.transform.SetParent(this.transform);
+
+        if (siblingIndex >= 0)
+        {
+            newDropdown.transform.SetSiblingIndex(siblingIndex);
+        }
     }
 
     private void AssignDropdown(int childIndex)
@@ -101,6 +106,8 @@ public class DropdownManager : MonoBehaviour
         AssignNextTypeOfDropdown();
         AssignDropdownOptions();
         AddOptionsToDropdown();
+
+        CheckIfConditionalDropdown();
         
         if (nextTypeOfDropdown != TypesOfDropdown.DEFAULT)
         {
@@ -113,12 +120,12 @@ public class DropdownManager : MonoBehaviour
         }
     }
 
-    private void FillDropdown(int childIndex, bool externalCall = false)
+    public void FillDropdown(int childIndex, bool extraInternalCall = false, TypesOfDropdown designatedTypeOfDropdown = TypesOfDropdown.NUMERICAL)
     {
-        AssignDropdown(this.transform.childCount - 1);
-        if (externalCall)
+        AssignDropdown(childIndex);
+        if (extraInternalCall)
         {
-            nextTypeOfDropdown = TypesOfDropdown.NUMERICAL;
+            nextTypeOfDropdown = designatedTypeOfDropdown;
         }
         else
         {
@@ -135,6 +142,35 @@ public class DropdownManager : MonoBehaviour
         {
             Destroy(dropdown.gameObject);
         }
+    }
+
+    public void FillDropdown(int childIndex, bool extraInternalCall = false, bool externalCall = false, TypesOfDropdown designatedTypeOfDropdown = TypesOfDropdown.NUMERICAL)
+    {
+        AssignDropdown(childIndex);
+        if (extraInternalCall)
+        {
+            FillDropdown(childIndex, extraInternalCall, false);
+        }
+        else if (externalCall)
+        {
+            nextTypeOfDropdown = designatedTypeOfDropdown;
+        }
+        else
+        {
+            AssignNextTypeOfDropdown();
+        }
+        AssignDropdownOptions();
+        AddOptionsToDropdown();
+        AddListenerToDropdown();
+
+        //if (nextTypeOfDropdown != TypesOfDropdown.DEFAULT)
+        //{
+        //    AddListenerToDropdown();
+        //}
+        //else
+        //{
+        //    Destroy(dropdown.gameObject);
+        //}
     }
 
     public void AddAndFillDropdown(int childIndex)
@@ -167,17 +203,17 @@ public class DropdownManager : MonoBehaviour
                 AddAnyDropdownOnValueChangeListener();
             }
             AddDropdown();
-            FillDropdown(childIndex, externalCall);
+            FillDropdown(childIndex, externalCall, false);
         }
         
     }
 
     private void AddListenerToDropdown()
     {
-        dropdown.onValueChanged.AddListener(delegate
-        {
-            OnDropdownValueChanged();
-        });
+        //dropdown.onValueChanged.AddListener(delegate
+        //{
+        //    OnDropdownValueChanged();
+        //});
         AddAnyDropdownOnValueChangeListener();
     }
 
@@ -421,7 +457,7 @@ public class DropdownManager : MonoBehaviour
         if (this.transform.childCount <= 6 && !extraNumeralDropdownExists)
         {
             Debug.Log("Adding extra dropdown");
-            AddAndFillDropdown(indexOfLastChild, true);
+            AddAndFillDropdown(this.transform.childCount - 1, true);
             dropdown.onValueChanged.RemoveAllListeners();
             AddAnyDropdownOnValueChangeListener();
             extraNumeralDropdownExists = true;
@@ -429,6 +465,15 @@ public class DropdownManager : MonoBehaviour
         else
         {
             Debug.Log("Attempted to add an extra dropdown and found that one was not needed.");
+        }
+    }
+
+    private void CheckIfConditionalDropdown()
+    {
+        if (nextTypeOfDropdown == TypesOfDropdown.CONDITIONAL)
+        {
+            Debug.Log("Adding Conditional Dropdown component");
+            this.gameObject.AddComponent<ConditionalDropdown>();
         }
     }
 

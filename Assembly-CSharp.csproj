@@ -84,6 +84,10 @@
     <Compile Include="Assets\Scripts\UIScripts\DisplayCardTagScripts\PowerAndDurabilitySlot.cs" />
     <Compile Include="Assets\Scripts\UIScripts\DisplayCardTagScripts\PowerOrb.cs" />
     <Compile Include="Assets\Scripts\UIScripts\Draggable.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\DropdownComponents\ConditionalDropdown.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\DropdownComponents\DropdownAbstract.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\DropdownComponents\EffectDropdown.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\DropdownComponents\IStarter.cs" />
     <Compile Include="Assets\Scripts\UIScripts\DropdownManager.cs" />
     <Compile Include="Assets\Scripts\UIScripts\DropZone.cs" />
     <Compile Include="Assets\Scripts\UIScripts\EffectTextTranslator.cs" />
