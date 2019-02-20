@@ -5,7 +5,6 @@ using TMPro;
 
 public class EffectDropdown : DropdownAbstract
 {
-    // Start is called before the first frame update
     void Start()
     {
         OnStart();
@@ -17,9 +16,34 @@ public class EffectDropdown : DropdownAbstract
 
         switch (currentValue.ToLower())
         {
+            case "deal damage":
+                AddNumeralDropdown();
+                break;
+            case "draw card":
+                AddNumeralDropdown();
+                break;
             default:
                 DeleteExtraDropdowns();
                 break;
         }
+
+        AddNumeralDropdownIfNecessary();
+    }
+
+    private void AddNumeralDropdown()
+    {
+        if (numberOfExtraDropdownsAdded == 0)
+        {
+            AddExtraDropdown(1, DropdownManager.TypesOfDropdown.NUMERICAL);
+        }
+        else
+        {
+            Debug.Log("Something went wrong in AddNumeralDropdown()");
+        }
+    }
+
+    private void AddNumeralDropdownIfNecessary()
+    {
+        AddNextDropdownAndComponent<NumeralDropdown>(true, DropdownManager.TypesOfDropdown.NUMERICAL);
     }
 }

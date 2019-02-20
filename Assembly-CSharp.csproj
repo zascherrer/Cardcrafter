@@ -88,10 +88,14 @@
     <Compile Include="Assets\Scripts\UIScripts\DropdownComponents\DropdownAbstract.cs" />
     <Compile Include="Assets\Scripts\UIScripts\DropdownComponents\EffectDropdown.cs" />
     <Compile Include="Assets\Scripts\UIScripts\DropdownComponents\IStarter.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\DropdownComponents\NumeralDropdown.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\DropdownComponents\TargetDropdown.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\DropdownComponents\TargetTypeDropdown.cs" />
     <Compile Include="Assets\Scripts\UIScripts\DropdownManager.cs" />
     <Compile Include="Assets\Scripts\UIScripts\DropZone.cs" />
-    <Compile Include="Assets\Scripts\UIScripts\EffectTextTranslator.cs" />
     <Compile Include="Assets\Scripts\UIScripts\Inspectable.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\Translators\ConditionalTranslator.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\Translators\EffectTextTranslator.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />

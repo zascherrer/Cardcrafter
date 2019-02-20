@@ -288,12 +288,12 @@ public class DisplayCard : MonoBehaviour
             for (int i = 0; i < dropdowns.Count; i++)
             {
                 string wordToAdd = dropdowns[i].options[dropdowns[i].value].text;
-                Debug.Log(wordToAdd);
+                //Debug.Log(wordToAdd);
                 words.Add(wordToAdd);
             }
 
             effectStrings = words;
-            wordsTranslated = EffectTextTranslator.TranslateEffectText(words);
+            wordsTranslated = RunEffectTranslators(words);
 
             for (int i = 0; i < wordsTranslated.Count; i++)
             {
@@ -302,6 +302,105 @@ public class DisplayCard : MonoBehaviour
             
             return result;
         }
+    }
+
+    private List<string> RunEffectTranslators(List<string> wordsToTranslate)
+    {
+        List<string> result = new List<string>();
+        //List<string> wordsWithoutEmpties = new List<string>();
+        List<DropdownAbstract> dropdowns = new List<DropdownAbstract>();
+        List<int> sectionLengths = new List<int>();
+        List<List<string>> sectionedWords = new List<List<string>>();
+
+        //wordsWithoutEmpties = RemoveEmptySlots(wordsToTranslate);
+        dropdowns = FindDropdownComponents();
+        sectionLengths = FindSectionLengths(dropdowns);
+        sectionedWords = DivideIntoSections(wordsToTranslate, sectionLengths);
+
+        result = EffectTextTranslator.Translate(sectionedWords);
+        return result;
+    }
+
+    private List<string> RemoveEmptySlots(List<string> words)
+    {
+        List<string> result = new List<string>();
+
+        for (int i = 0; i < words.Count; i++)
+        {
+            if (words[i] != "" && words[i] != " ")
+            {
+                result.Add(words[i]);
+            }
+        }
+
+        return result;
+    }
+
+    private List<DropdownAbstract> FindDropdownComponents()
+    {
+        List<DropdownAbstract> result = new List<DropdownAbstract>();
+        ConditionalDropdown conditional = effectSlot.GetComponent<ConditionalDropdown>();
+        EffectDropdown effect = effectSlot.GetComponent<EffectDropdown>();
+        NumeralDropdown numeral = effectSlot.GetComponent<NumeralDropdown>();
+        TargetDropdown target = effectSlot.GetComponent<TargetDropdown>();
+        TargetTypeDropdown targetType = effectSlot.GetComponent<TargetTypeDropdown>();
+
+        if (conditional)
+        {
+            result.Add(conditional);
+        }
+        if (effect)
+        {
+            result.Add(effect);
+        }
+        if (numeral)
+        {
+            result.Add(numeral);
+        }
+        if (target)
+        {
+            result.Add(target);
+        }
+        if (targetType)
+        {
+            result.Add(targetType);
+        }
+
+        return result;
+    }
+
+    private List<int> FindSectionLengths(List<DropdownAbstract> dropdowns)
+    {
+        List<int> result = new List<int>();
+
+        for (int i = 0; i < dropdowns.Count; i++)
+        {
+            result.Add(dropdowns[i].numberOfExtraDropdownsAdded + 1);
+        }
+
+        return result;
+    }
+
+    private List<List<string>> DivideIntoSections(List<string> originalWords, List<int> sectionLengths)
+    {
+        List<List<string>> result = new List<List<string>>();
+        int skipAheadBy = 0;
+
+        for (int i = 0; i < sectionLengths.Count; i++)
+        {
+            List<string> section = new List<string>();
+
+            for (int j = 0; j < sectionLengths[i]; j++)
+            {
+                int index = skipAheadBy + j;
+                section.Add(originalWords[index]);
+            }
+
+            skipAheadBy += sectionLengths[i];
+            result.Add(section);
+        }
+
+        return result;
     }
 
     private void AddTextToDescription(string textToAdd)
@@ -386,7 +485,7 @@ public class DisplayCard : MonoBehaviour
 
         if (combinedKeywords.Count > 1)
         {
-            Debug.Log(combinedKeywords.Count);
+            //Debug.Log(combinedKeywords.Count);
         }
 
         if(powerAndDurabilityDropdowns.Count == 1)

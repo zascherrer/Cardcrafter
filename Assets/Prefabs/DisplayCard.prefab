@@ -1330,6 +1330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05da3c8f6f0204f449a98d17c5e4c831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectSlot: {fileID: 0}
+  effectDropdowns: []
 --- !u!1 &7611405088383370275
 GameObject:
   m_ObjectHideFlags: 0
