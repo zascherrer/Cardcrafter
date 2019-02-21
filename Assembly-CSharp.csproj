@@ -96,6 +96,8 @@
     <Compile Include="Assets\Scripts\UIScripts\Inspectable.cs" />
     <Compile Include="Assets\Scripts\UIScripts\Translators\ConditionalTranslator.cs" />
     <Compile Include="Assets\Scripts\UIScripts\Translators\EffectTextTranslator.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\Translators\EffectTranslator.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\Translators\TranslatorAbstract.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />

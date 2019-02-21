@@ -25,6 +25,9 @@ public static class EffectTextTranslator
                 case 0:
                     translatedSections.Add(ConditionalTranslator.Translate(sectionedWords[i]));
                     break;
+                case 1:
+                    translatedSections.Add(EffectTranslator.Translate(sectionedWords[i]));
+                    break;
                 default:
                     Debug.Log("There are too many sections in EffectTextTranslator.Translate(), somehow");
                     break;
